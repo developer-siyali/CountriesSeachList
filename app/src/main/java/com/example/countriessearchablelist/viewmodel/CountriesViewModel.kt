@@ -5,7 +5,7 @@ import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.example.countriessearchablelist.model.Country
-import com.example.countriessearchablelist.model.CountryNamesList
+import com.example.countriessearchablelist.model.CountriesAttributes
 import com.example.countriessearchablelist.repository.CountriesRepository
 import kotlinx.coroutines.launch
 import retrofit2.Response
@@ -13,10 +13,10 @@ import retrofit2.Response
 class CountriesViewModel(private val countriesRepository: CountriesRepository): ViewModel() {
 
     private val _countriesListApiResponse: MutableLiveData<Response<List<Country>>> = MutableLiveData()
-    private val _countryNamesList: MutableLiveData<CountryNamesList> = MutableLiveData()
+    private val _countriesAttributes: MutableLiveData<CountriesAttributes> = MutableLiveData()
 
     val countriesListApiResponse: LiveData<Response<List<Country>>> get() = _countriesListApiResponse
-    val countryNamesList: LiveData<CountryNamesList> get() = _countryNamesList
+    val countriesAttributes: LiveData<CountriesAttributes> get() = _countriesAttributes
 
     fun setCountriesApiResponse() {
         viewModelScope.launch {
@@ -25,9 +25,9 @@ class CountriesViewModel(private val countriesRepository: CountriesRepository): 
         }
     }
 
-    fun setCountryNamesList(countryNamesList: CountryNamesList) {
+    fun setCountryNamesList(countriesAttributes: CountriesAttributes) {
         viewModelScope.launch {
-            _countryNamesList.value = countryNamesList
+            _countriesAttributes.value = countriesAttributes
         }
     }
 

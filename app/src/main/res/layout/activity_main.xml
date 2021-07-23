@@ -6,61 +6,16 @@
     android:layout_height="match_parent"
     tools:context=".MainActivity">
 
-
-    <com.google.android.material.button.MaterialButton
-        android:id="@+id/next_button"
-        style="@style/Widget.Shrine.Button"
-        android:layout_width="0dp"
-        android:layout_height="wrap_content"
-        android:layout_alignParentEnd="true"
-        android:text="@string/view_all_countries"
+    <androidx.fragment.app.FragmentContainerView
+        android:id="@+id/fragment"
+        android:name="androidx.navigation.fragment.NavHostFragment"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        app:defaultNavHost="true"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.595"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintVertical_bias="0.976"
-        app:layout_constraintWidth_percent="0.9"/>
-
-    <com.google.android.material.textfield.TextInputLayout
-        android:id="@+id/search_edit_text"
-        style="@style/Widget.Shrine.TextInputLayout"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_marginTop="@dimen/activity_user_input_margin"
-        android:hint="@string/find_country"
-        app:errorEnabled="true"
-        app:endIconMode="custom"
-        android:focusable="true"
-        android:focusableInTouchMode="true"
-        app:layout_constraintBottom_toTopOf="@+id/search_button"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent">
-
-        <AutoCompleteTextView
-            android:id="@+id/auto_complete_view"
-            android:layout_width="match_parent"
-            android:layout_height="match_parent"
-            android:inputType="text"
-            android:focusable="true"
-            android:focusableInTouchMode="true"
-            tools:ignore="LabelFor" />
-    </com.google.android.material.textfield.TextInputLayout>
-
-    <com.google.android.material.button.MaterialButton
-        android:id="@+id/search_button"
-        style="@style/Widget.Shrine.Button"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_alignParentEnd="true"
-        android:layout_marginBottom="@dimen/activity_search_button_margin"
-        android:text="@string/go"
-        android:clickable="false"
-        app:layout_constraintBottom_toTopOf="@+id/next_button"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.916"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/search_edit_text" />
+        app:navGraph="@navigation/counties_list_navigation" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>

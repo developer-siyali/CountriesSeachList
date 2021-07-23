@@ -1,0 +1,22 @@
+<?xml version="1.0" encoding="utf-8"?>
+<navigation xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/counties_list_navigation"
+    app:startDestination="@id/view_countries_list_fragment">
+
+    <fragment
+        android:id="@+id/search_input_fragment"
+        android:name="com.example.countriessearchablelist.CountriesListFragment"
+        android:label="fragment_countries_list"
+        tools:layout="@layout/fragment_countries_list" />
+    <fragment
+        android:id="@+id/view_countries_list_fragment"
+        android:name="com.example.countriessearchablelist.SearchForCountryFragment"
+        android:label="fragment_search_for_country"
+        tools:layout="@layout/fragment_search_for_country" >
+        <action
+            android:id="@+id/navigate_to_view_countries_list_fragment"
+            app:destination="@id/search_input_fragment" />
+    </fragment>
+</navigation>

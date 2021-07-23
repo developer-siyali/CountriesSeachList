@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
-    <dimen name="countries_row_spacing_large">50dp</dimen>
+    <dimen name="countries_row_spacing_large">100dp</dimen>
     <dimen name="countries_row_wild_card_height_landscape">140dp</dimen>
 
     <dimen name="activity_search_button_margin">330dp</dimen>
