@@ -12,6 +12,7 @@ import androidx.fragment.app.Fragment
 import androidx.navigation.Navigation
 import com.example.countriessearchablelist.databinding.FragmentSearchForCountryBinding
 import com.example.countriessearchablelist.model.CountriesAttributes
+import com.example.countriessearchablelist.util.ProgressDialog
 import com.example.countriessearchablelist.util.makeViewScrollable
 import com.example.countriessearchablelist.viewmodel.CountriesViewModel
 import org.koin.android.ext.android.inject
@@ -24,6 +25,7 @@ class SearchForCountryFragment : Fragment(){
     private var countryFlagsList: MutableList<String> = mutableListOf()
     private var countryCodesList: MutableList<String> = mutableListOf()
     private lateinit var bindingSearchForCountryFragment: FragmentSearchForCountryBinding
+    private val dialog: ProgressDialog by inject()
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
@@ -83,7 +85,7 @@ class SearchForCountryFragment : Fragment(){
             }
         })
         goButtonOnclick()
-        viewAllCountriesOnClick()
+        viewAllCountriesOnClick(activity as MainActivity)
 
         return bindingSearchForCountryFragment.root
     }
@@ -92,8 +94,10 @@ class SearchForCountryFragment : Fragment(){
         bindingSearchForCountryFragment.searchButton.isClickable = userInput in countryNamesList
     }
 
-    private fun viewAllCountriesOnClick() {
+    private fun viewAllCountriesOnClick(activity: MainActivity) {
         bindingSearchForCountryFragment.viewAllCountriesButton.setOnClickListener { view ->
+            activity.let { dialog.showProgressBar(it) }
+            dialog.showDialog()
             Navigation.findNavController(view).navigate(R.id.search_input_fragment_navigate_to_view_countries_list_fragment)
         }
     }

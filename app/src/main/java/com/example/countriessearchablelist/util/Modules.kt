@@ -16,4 +16,6 @@ val appModule = module {
 
     single { CountriesExpandableListAdapter() }
 
+    single { ProgressDialog() }
+
 }

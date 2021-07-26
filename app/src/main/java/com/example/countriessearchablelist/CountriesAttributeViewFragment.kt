@@ -1,18 +1,22 @@
 package com.example.countriessearchablelist
 
 import android.os.Bundle
-import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.ExpandableListView
+import androidx.activity.OnBackPressedCallback
+import androidx.fragment.app.Fragment
+import androidx.navigation.fragment.findNavController
 import androidx.navigation.fragment.navArgs
 import com.example.countriessearchablelist.databinding.FragmentCountriesAttributeViewFragmentBinding
+import com.example.countriessearchablelist.util.ProgressDialog
 import com.example.countriessearchablelist.util.loadSvgOrOthers
 import com.example.countriessearchablelist.view.CountriesExpandableListAdapter
 import com.example.countriessearchablelist.viewmodel.CountriesViewModel
 import org.koin.android.ext.android.inject
 import timber.log.Timber
+
 
 class CountriesAttributeViewFragment : Fragment() {
 
@@ -21,6 +25,7 @@ class CountriesAttributeViewFragment : Fragment() {
     private val countriesViewModel: CountriesViewModel by inject()
     private lateinit var expandableListView: ExpandableListView
     private val adapterCountries: CountriesExpandableListAdapter by inject()
+    private val dialog: ProgressDialog by inject()
     private var languageList: MutableList<String> = mutableListOf()
     private var currencyList: MutableList<String> = mutableListOf()
     private var expandableInformationMap: MutableMap<String, List<String>> = mutableMapOf()
@@ -29,7 +34,11 @@ class CountriesAttributeViewFragment : Fragment() {
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View {
-        bindingAttributesView = FragmentCountriesAttributeViewFragmentBinding.inflate(layoutInflater, container, false)
+        bindingAttributesView = FragmentCountriesAttributeViewFragmentBinding.inflate(
+            layoutInflater,
+            container,
+            false
+        )
         countriesViewModel.setCountryApiResponse(args.countryCode)
         countriesViewModel.countryApiResponse.observe(viewLifecycleOwner, { response ->
             if (response.isSuccessful) {
@@ -45,7 +54,12 @@ class CountriesAttributeViewFragment : Fragment() {
                     val convertToString = "${currency.name};${currency.symbol};${currency.code}"
                     currencyList.add(convertToString)
                 }
-                val countryList = listOf(requireContext().resources.getString(R.string.language), requireContext().resources.getString(R.string.currency))
+                val countryList = listOf(
+                    requireContext().resources.getString(R.string.language),
+                    requireContext().resources.getString(
+                        R.string.currency
+                    )
+                )
                 expandableInformationMap[countryList[0]] = languageList
                 expandableInformationMap[countryList[1]] = currencyList
                 adapterCountries.setData(countryList, expandableInformationMap)
@@ -57,4 +71,6 @@ class CountriesAttributeViewFragment : Fragment() {
         })
         return bindingAttributesView.root
     }
+
+
 }
