@@ -1,5 +1,6 @@
 package com.example.countriessearchablelist
 
+import android.content.res.Configuration
 import android.os.Bundle
 import android.text.Editable
 import android.text.TextWatcher
@@ -11,20 +12,18 @@ import androidx.fragment.app.Fragment
 import androidx.navigation.Navigation
 import com.example.countriessearchablelist.databinding.FragmentSearchForCountryBinding
 import com.example.countriessearchablelist.model.CountriesAttributes
-import com.example.countriessearchablelist.view.CountriesListAdapter
+import com.example.countriessearchablelist.util.makeViewScrollable
 import com.example.countriessearchablelist.viewmodel.CountriesViewModel
 import org.koin.android.ext.android.inject
-import org.koin.androidx.viewmodel.ext.android.viewModel
 import timber.log.Timber
 
 
-class SearchForCountryFragment : Fragment() {
-    private val countriesViewModel by viewModel<CountriesViewModel>()
+class SearchForCountryFragment : Fragment(){
+    private val countriesViewModel: CountriesViewModel by inject()
     private var countryNamesList: MutableList<String> = mutableListOf()
     private var countryFlagsList: MutableList<String> = mutableListOf()
-    private val adapter: CountriesListAdapter by inject()
-
-    lateinit var bindingSearchForCountryFragment: FragmentSearchForCountryBinding
+    private var countryCodesList: MutableList<String> = mutableListOf()
+    private lateinit var bindingSearchForCountryFragment: FragmentSearchForCountryBinding
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
@@ -41,11 +40,13 @@ class SearchForCountryFragment : Fragment() {
                 response.body()?.filter { country ->
                     countryNamesList.add(country.name)
                     countryFlagsList.add(country.flag)
+                    countryCodesList.add(country.alpha3Code)
                 }
-                countriesViewModel.setCountryNamesList(
+                countriesViewModel.setCountryAttributesModel(
                     CountriesAttributes(
                         countryNamesList,
-                        countryFlagsList
+                        countryFlagsList,
+                        countryCodesList
                     )
                 )
                 val listAdapter = ArrayAdapter(
@@ -81,8 +82,8 @@ class SearchForCountryFragment : Fragment() {
                 Timber.i("Response error code ${response.code()}, error message ${response.message()}")
             }
         })
+        goButtonOnclick()
         viewAllCountriesOnClick()
-
 
         return bindingSearchForCountryFragment.root
     }
@@ -93,11 +94,15 @@ class SearchForCountryFragment : Fragment() {
 
     private fun viewAllCountriesOnClick() {
         bindingSearchForCountryFragment.viewAllCountriesButton.setOnClickListener { view ->
-            countriesViewModel.countriesAttributes.observe(viewLifecycleOwner, { countriesAttributes ->
-                context?.let { adapter.setData(countriesAttributes) }
-            })
+            Navigation.findNavController(view).navigate(R.id.search_input_fragment_navigate_to_view_countries_list_fragment)
+        }
+    }
 
-            Navigation.findNavController(view).navigate(R.id.navigate_to_view_countries_list_fragment)
+    private fun goButtonOnclick(){
+        bindingSearchForCountryFragment.searchButton.setOnClickListener {
+            val indexOfSearchCountry = countryNamesList.indexOf(bindingSearchForCountryFragment.autoCompleteView.text.toString())
+            val action = SearchForCountryFragmentDirections.searchInputFragmentNavigateToCountriesAttributeViewFragment(countryCodesList[indexOfSearchCountry])
+            Navigation.findNavController(it).navigate(action)
         }
     }
 }

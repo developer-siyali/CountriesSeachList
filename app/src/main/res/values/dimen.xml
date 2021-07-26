@@ -4,9 +4,14 @@
     <dimen name="countries_row_wild_card_height_landscape">140dp</dimen>
 
     <dimen name="activity_search_button_margin">330dp</dimen>
-    <dimen name="activity_user_input_margin">50dp</dimen>
+    <dimen name="activity_user_input_margin">200dp</dimen>
+    <dimen name="activity_search_margin_spacing">70dp</dimen>
 
     <dimen name="adapter_left_text_padding">20dp</dimen>
     <dimen name="adapter_line_separator_height">3dp</dimen>
+
+
+    <dimen name="attribute_view_text_size">15sp</dimen>
+    <dimen name="flag_height">200sp</dimen>
 
 </resources>

@@ -10,9 +10,9 @@ import com.example.countriessearchablelist.model.CountriesAttributes
 import com.example.countriessearchablelist.util.loadSvgOrOthers
 
 
-class CountriesListAdapter: RecyclerView.Adapter<CountriesListAdapter.CountriesListViewHolder>() {
+class CountriesListAdapter(private val callback: ItemOnClickListener?): RecyclerView.Adapter<CountriesListAdapter.CountriesListViewHolder>() {
     private lateinit var bindingAdapterCountyRow: AdapterCountryRowBinding
-    private var countriesAttributes: CountriesAttributes = CountriesAttributes(emptyList(), emptyList())
+    private var countriesAttributes: CountriesAttributes = CountriesAttributes(emptyList(), emptyList(), emptyList())
 
     inner class CountriesListViewHolder(private val binding: AdapterCountryRowBinding): RecyclerView.ViewHolder(binding.root) {
 
@@ -33,6 +33,9 @@ class CountriesListAdapter: RecyclerView.Adapter<CountriesListAdapter.CountriesL
     override fun onBindViewHolder(holder: CountriesListViewHolder, position: Int) {
         if (position < itemCount) {
             holder.bind(countriesAttributes.countryNames[position], countriesAttributes.countryFlags[position])
+            holder.itemView.setOnClickListener {
+                callback?.onClickListener(countriesAttributes.countryCodes[position])
+            }
         }
     }
 

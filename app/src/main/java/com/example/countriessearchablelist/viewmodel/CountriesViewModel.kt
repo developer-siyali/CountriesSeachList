@@ -13,9 +13,11 @@ import retrofit2.Response
 class CountriesViewModel(private val countriesRepository: CountriesRepository): ViewModel() {
 
     private val _countriesListApiResponse: MutableLiveData<Response<List<Country>>> = MutableLiveData()
+    private val _countryApiResponse: MutableLiveData<Response<Country>> = MutableLiveData()
     private val _countriesAttributes: MutableLiveData<CountriesAttributes> = MutableLiveData()
 
     val countriesListApiResponse: LiveData<Response<List<Country>>> get() = _countriesListApiResponse
+    val countryApiResponse: LiveData<Response<Country>> get() = _countryApiResponse
     val countriesAttributes: LiveData<CountriesAttributes> get() = _countriesAttributes
 
     fun setCountriesApiResponse() {
@@ -25,9 +27,16 @@ class CountriesViewModel(private val countriesRepository: CountriesRepository): 
         }
     }
 
-    fun setCountryNamesList(countriesAttributes: CountriesAttributes) {
+    fun setCountryAttributesModel(countriesAttributes: CountriesAttributes) {
         viewModelScope.launch {
             _countriesAttributes.value = countriesAttributes
+        }
+    }
+
+    fun setCountryApiResponse(code: String) {
+        viewModelScope.launch {
+            val response: Response<Country> = countriesRepository.getCountry(code)
+            _countryApiResponse.value = response
         }
     }
 

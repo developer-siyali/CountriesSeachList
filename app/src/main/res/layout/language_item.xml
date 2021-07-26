@@ -10,7 +10,7 @@
     <TextView
         android:id="@+id/language_item"
         android:layout_width="match_parent"
-        android:layout_height="@dimen/activity_user_input_margin"
+        android:layout_height="@dimen/activity_search_margin_spacing"
         android:gravity="center_vertical"
         android:paddingStart="@dimen/adapter_left_text_padding"
         tools:text="South Africa" />

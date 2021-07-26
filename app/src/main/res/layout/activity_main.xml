@@ -16,6 +16,6 @@
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
-        app:navGraph="@navigation/counties_list_navigation" />
+        app:navGraph="@navigation/countries_list_navigation" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>

@@ -8,19 +8,17 @@ import android.view.ViewGroup
 import android.widget.ExpandableListView
 import androidx.navigation.fragment.navArgs
 import com.example.countriessearchablelist.databinding.FragmentCountriesAttributeViewFragmentBinding
-import com.example.countriessearchablelist.model.CountryCurrency
 import com.example.countriessearchablelist.util.loadSvgOrOthers
 import com.example.countriessearchablelist.view.CountriesExpandableListAdapter
 import com.example.countriessearchablelist.viewmodel.CountriesViewModel
 import org.koin.android.ext.android.inject
-import org.koin.androidx.viewmodel.ext.android.viewModel
 import timber.log.Timber
 
 class CountriesAttributeViewFragment : Fragment() {
 
     private lateinit var bindingAttributesView: FragmentCountriesAttributeViewFragmentBinding
     private val args: CountriesAttributeViewFragmentArgs by navArgs()
-    private val countriesViewModel by viewModel<CountriesViewModel>()
+    private val countriesViewModel: CountriesViewModel by inject()
     private lateinit var expandableListView: ExpandableListView
     private val adapterCountries: CountriesExpandableListAdapter by inject()
     private var languageList: MutableList<String> = mutableListOf()

@@ -9,4 +9,8 @@ class CountriesRepository(private val countriesApi: CountriesAPI) {
     suspend fun getCountries(): Response<List<Country>> {
         return countriesApi.getCountries()
     }
+
+    suspend fun getCountry(code: String): Response<Country> {
+        return countriesApi.getCountry(code)
+    }
 }
